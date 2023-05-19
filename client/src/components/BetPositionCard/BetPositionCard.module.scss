@@ -1,7 +1,14 @@
+@import "../../shared/theme";
+
 .BetPositionCard {
     border-radius: 3.5px;
+    cursor: pointer;
     padding: .8rem;
     text-align: center;
+    font: {
+        size: $betTextSize;
+        weight: $betTextWeight;
+    }
 
     &_Scissors {
         $border:#e31542;

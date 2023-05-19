@@ -1,7 +1,17 @@
+
 .BetContainer {
     display: flex;
     justify-content: center;
     gap: 1rem;
+
+    &ButtonWrapper {
+        text-align: center;
+    }
+
+    &Button {
+        margin-top: 3rem;
+        width: 10%;
+    }
 
     &_Card {
         width: 8%;

@@ -1,23 +1,19 @@
-import { BET_STATUSES } from "../../shared/constants";
-import { BetStatus } from "../../shared/types";
+// @types
+import { BetResultType } from "../../shared/types";
+
+// @utils
+import { getHeaderMessage } from "./BetHeader.utils";
 
 interface BetHeaderProps {
-    betStatus:boolean
+    betStatus:string,
+    betResult:BetResultType
 }
 
-const getHeaderMessage = (betStatus:BetStatus) => {
-    if(betStatus === BET_STATUSES.STARTING) {
-        return 'PICK YOUR POSITIONS';
-    }
-
-    if(betStatus === BET_STATUSES.IN_PROGRESS) {
-        
-    }
-}
-
-const BetHeader = ({ betStatus }:BetHeaderProps) => {
+const BetHeader = ({ betStatus, betResult }:BetHeaderProps) => {
   return (
-    <div>{betStatus}</div>
+    <header>
+      {getHeaderMessage(betStatus, betResult)}
+    </header>
   );
 }
 

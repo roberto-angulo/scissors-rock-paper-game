@@ -1,0 +1,14 @@
+@import "../../shared/theme";
+
+.Button {
+    background-color: $dark;
+    border: 1px solid $gold;
+    border-radius: 2rem;
+    color: $gold;
+    cursor: pointer;
+    font: {
+        size: $betTextSize;
+        weight: $betTextWeight;
+    }
+    padding: .7rem;
+}

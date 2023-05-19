@@ -9,3 +9,11 @@ export interface Bet {
     betPositionName:string,
     betAmount:number
 }
+export interface BetResultType {
+    hasUserWon:boolean,
+    returnedAmount:number,
+    positions: {
+        playerPositionId:number|null,
+        computerPositionId:number|null
+    }
+}

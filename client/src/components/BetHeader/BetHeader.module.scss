@@ -1,0 +1,13 @@
+@import "../../shared/_theme.scss";
+
+.BetHeader {
+    &StartingPosition {
+        color: $gold;
+        font: {
+            size: 1rem;
+            weight: 400;
+        }
+        text-align: center;
+        padding-bottom: .8rem;
+    }
+}

@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
-import { BET_STATUSES, ROCK_ID, PAPER_ID, SCISSORS_ID } from '../shared/constants';
-import { Bet, BetStatus } from '../shared/types';
+import { BET_STATUSES, ROCK_ID, PAPER_ID, SCISSORS_ID, POSITIONS_BET } from '../shared/constants';
+import { Bet, BetResultType, BetStatus } from '../shared/types';
 
 const hasPlayerWon = (playerPositionId:number , computerPositionId:number) => {
     if(playerPositionId === computerPositionId) {
@@ -20,34 +20,53 @@ const hasPlayerWon = (playerPositionId:number , computerPositionId:number) => {
     }
 }
 
-interface BetResultType {
-    hasUserWon:boolean,
-    returnedAmount:number,
-    positions: {
-        playerPositionId:number,
-        computerPositionId:number
-    }
-}
 const calculateBetResult = (bets:number, totalBet:number) => bets === 2
                                                         ? totalBet * 3
                                                         : totalBet * 14;
-
+const DEFAULT_STATE = {
+    hasUserWon: false,
+    returnedAmount: 0,
+    positions: {
+        playerPositionId:null,
+        computerPositionId:null
+    }
+}
+const getFinalPositionsResult = (bets:Bet[], computerPositionId:number) => {
+    const totalBet = bets.reduce((accumulatedBet, bet) => accumulatedBet+bet.betAmount, bets[0].betAmount);
+    let output:BetResultType = {
+        ...DEFAULT_STATE,
+        positions: {
+            computerPositionId,
+            playerPositionId: bets[0].betPositionId
+        }
+    };
+    bets.forEach(bet => {
+        if(hasPlayerWon(bet.betPositionId, computerPositionId)) {
+            return output = {
+                hasUserWon: true,
+                positions: {
+                    computerPositionId,
+                    playerPositionId: bet.betPositionId, 
+                },
+                returnedAmount: calculateBetResult(bets.length, totalBet),
+            }
+        }
+    });
+    return output;
+}
 const useBetStatus = (bets:Bet[]):[BetStatus, Dispatch<SetStateAction<BetStatus>>, BetResultType] => {
     const [betStatus, setBetStatus] = useState<BetStatus>(BET_STATUSES.STARTING);
-    const [betResult, setBetResult] = useState<BetResultType>({ hasUserWon: false, returnedAmount: 0 });
+    const [betResult, setBetResult] = useState<BetResultType>(DEFAULT_STATE);
     useEffect(() => {
-        if(betStatus === BET_STATUSES.IN_PROGRESS && bets.length) {
-            const computerChoice = Math.floor(Math.random() * Object.values(BET_STATUSES).length);
-            const hasUserWon = bets.some(bet => hasPlayerWon(bet.betPositionId, computerChoice));
-            const totalBetAmount = bets.reduce((accumulatedBet, bet) => accumulatedBet+bet.betAmount, bets[0].betAmount);
-            if(hasUserWon) {
-                setBetResult({
-                    hasUserWon,
-                    returnedAmount: calculateBetResult(bets.length, totalBetAmount)
-                });
-            }
-
+        if(betStatus === BET_STATUSES.IN_PROGRESS) {
+            const computerChoice = Math.floor(Math.random() * Object.values(POSITIONS_BET).length);
+            setBetResult(getFinalPositionsResult(bets, computerChoice));
+            setBetStatus(BET_STATUSES.FINISHED);
         }
+        /* else if(betStatus === BET_STATUSES.FINISHED) {
+            setBetResult(DEFAULT_STATE);
+            setBetStatus(BET_STATUSES.STARTING);
+        } */
     }, [bets, betStatus]);
 
   return [betStatus, setBetStatus, betResult];
