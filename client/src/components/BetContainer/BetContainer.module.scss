@@ -1,0 +1,9 @@
+.BetContainer {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+
+    &_Card {
+        width: 8%;
+    }
+}

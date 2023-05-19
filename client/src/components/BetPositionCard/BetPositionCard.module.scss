@@ -1,0 +1,26 @@
+.BetPositionCard {
+    border-radius: 3.5px;
+    padding: .8rem;
+    text-align: center;
+
+    &_Scissors {
+        $border:#e31542;
+        background-color: #50091e;
+        border: 1px solid $border;
+        color: $border;
+    }
+
+    &_Paper {
+        $border:#16c359;
+        background-color:#1a381d;
+        border: 1px solid $border;
+        color: $border;
+    }
+
+    &_Rock {
+        $border:#2680ea;
+        background-color: #211f4f;
+        border: 1px solid $border;
+        color: $border;
+    }
+}
