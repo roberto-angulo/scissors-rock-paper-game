@@ -10,7 +10,7 @@ export interface Bet {
     betAmount:number
 }
 export interface BetResultType {
-    hasUserWon:boolean,
+    hasUserWon:boolean|undefined,
     returnedAmount:number,
     positions: {
         playerPositionId:number|null,

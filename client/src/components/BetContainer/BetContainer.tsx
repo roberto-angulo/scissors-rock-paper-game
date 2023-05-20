@@ -5,12 +5,12 @@ import { useState } from 'react';
 import BetPositionCard from '../BetPositionCard/BetPositionCard';
 
 // @constants
-import { Bet, BetPositionIdType, BetStatus } from '../../shared/types';
+import { Bet, BetPositionIdType } from '../../shared/types';
 
 // @styles
 import css from './BetContainer.module.scss';
 import { BET_STATUSES } from '../../shared/constants';
-import useBetStatus from '../../hooks/useBetStatus';
+import useBetStatus from '../../hooks/useBetStatus/useBetStatus';
 import BetHeader from '../BetHeader/BetHeader';
 import Button from '../Button/Button';
 
@@ -32,7 +32,6 @@ const BET_DEFAULT_STATE:Bet[] = [
   },
 ];
 const MAX_BET_POSITIONS = 2;
-
 const BetContainer = () => {
   const [bets, setBets] = useState<Bet[]>(BET_DEFAULT_STATE);
   const [betStatus, setBetStatus, betResult] = useBetStatus(bets);
@@ -50,8 +49,6 @@ const BetContainer = () => {
     }
     setBets(newState);
   };
-  console.log('BET RESULT:', betResult);
-  // console.log('betStatus', betStatus);
   return (
     <div>
       <BetHeader betStatus={betStatus} betResult={betResult} />
@@ -73,10 +70,10 @@ const BetContainer = () => {
           onClickHandler={() => {
             if(betStatus === BET_STATUSES.STARTING) {
               setBetStatus(BET_STATUSES.IN_PROGRESS);
-            }
-            /* else if(betStatus === BET_STATUSES.FINISHED) {
+            } else if(betStatus === BET_STATUSES.FINISHED) {
               setBets(BET_DEFAULT_STATE);
-            } */
+              setBetStatus(BET_STATUSES.STARTING);
+            }
         }}
           disabled={betStatus === BET_STATUSES.IN_PROGRESS}
           >

@@ -14,26 +14,34 @@ export const getHeaderMessage = (betStatus:string, betResult:BetResultType) => {
     }
     if(betStatus === BET_STATUSES.IN_PROGRESS) {
         return (
-            <h1>
+            <h1 className={css.BetHeaderProgressPosition}>
                 <span>
-                {getPositionBet(betResult.positions.computerPositionId as number)?.betPositionName}
+                    {getPositionBet(betResult.positions.computerPositionId as number)?.betPositionName}
                 </span>
-                <span> VS </span>
+                <span className={css.BetHeaderProgressPosition__vs}> VS </span>
                 <span>
-                {getPositionBet(betResult.positions.playerPositionId as number)?.betPositionName}
+                    {getPositionBet(betResult.positions.playerPositionId as number)?.betPositionName}
                 </span>
             </h1>
         );
     }
     if(betStatus === BET_STATUSES.FINISHED) {
-      return (<div>
+      return (<h1 className={css.BetHeaderFinishedPosition}>
                 {betResult.hasUserWon
-                ? <p>
-                    {betResult.positions.playerPositionId} WON
-                    <p>YOU WIN {betResult.returnedAmount.toFixed(2)}</p>
-                </p>
-                : `${betResult.positions.playerPositionId} LOST`}
-                </div>
+                    ? <p className={css.BetHeaderFinishedPosition}>
+                        {getPositionBet(betResult.positions.playerPositionId as number)?.betPositionName} WON
+                        <p className={css.BetHeaderFinishedPosition__winMessage}>
+                            YOU WIN
+                            <span  className={css.BetHeaderFinishedPosition__moneyReturned}>
+                                {betResult.returnedAmount.toFixed(2)}
+                            </span>
+                        </p>
+                    </p>
+                    : <p className={css.BetHeaderFinishedPositionLose}>
+                        <span className={css.BetHeaderFinishedPosition__loseMessage}>
+                            {getPositionBet(betResult.positions.playerPositionId as number)?.betPositionName}</span> LOST
+                        </p>}
+                </h1>
       );
     }
 }
