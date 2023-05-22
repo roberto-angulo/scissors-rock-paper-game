@@ -14,6 +14,7 @@ interface ButtonsPropsTypes {
 const Button = ({ children, onClickHandler, disabled, classes }:ButtonsPropsTypes) => {
   return (
     <button
+        data-testid="betButton"
         className={cx(css.Button, classes)}
         disabled={disabled}
         onClick={onClickHandler}

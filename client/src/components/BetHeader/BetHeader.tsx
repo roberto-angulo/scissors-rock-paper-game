@@ -4,15 +4,15 @@ import { BetResultType } from "../../shared/types";
 // @utils
 import { getHeaderMessage } from "./BetHeader.utils";
 
-interface BetHeaderProps {
+export interface BetHeaderProps {
     betStatus:string,
-    betResult:BetResultType
+    betResult:BetResultType[]
 }
 
 const BetHeader = ({ betStatus, betResult }:BetHeaderProps) => {
   return (
-    <header>
-      {getHeaderMessage(betStatus, betResult)}
+    <header data-testid="bet-header">
+      {betResult.map(bet => getHeaderMessage(betStatus, bet))}
     </header>
   );
 }

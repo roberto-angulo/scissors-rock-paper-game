@@ -4,43 +4,30 @@ import { useState } from 'react';
 // @components
 import BetPositionCard from '../BetPositionCard/BetPositionCard';
 
-// @constants
+// @types
 import { Bet, BetPositionIdType } from '../../shared/types';
 
 // @styles
 import css from './BetContainer.module.scss';
-import { BET_STATUSES } from '../../shared/constants';
+
+// @constants
+import { BET_DEFAULT_STATE, BET_STATUSES, MAX_BET_POSITIONS } from '../../shared/constants';
+
+// @hooks
 import useBetStatus from '../../hooks/useBetStatus/useBetStatus';
+
+// @components
 import BetHeader from '../BetHeader/BetHeader';
 import Button from '../Button/Button';
 
-const BET_DEFAULT_STATE:Bet[] = [
-  {
-    betPositionId: 1,
-    betPositionName: 'ROCK',
-    betAmount: 0
-  },
-  {
-    betPositionId: 2,
-    betPositionName: 'PAPER',
-    betAmount: 0
-  },
-  {
-    betPositionId: 3,
-    betPositionName: 'SCISSORS',
-    betAmount: 0
-  },
-];
-const MAX_BET_POSITIONS = 2;
 const BetContainer = () => {
   const [bets, setBets] = useState<Bet[]>(BET_DEFAULT_STATE);
-  const [betStatus, setBetStatus, betResult] = useBetStatus(bets);
+  const [betStatus, setBetStatus, betResult] = useBetStatus(bets.filter(({ betAmount }) => betAmount));
   const setBetAmount = (id:BetPositionIdType) => {
     const userBetsPositions = bets.filter(bet => bet.betPositionId !== id && bet.betAmount);
     if(userBetsPositions.length === MAX_BET_POSITIONS) {
       return;
     }
-
     const newState = [...bets];
     const positionAffected = bets.findIndex(bet => bet.betPositionId === id);
     newState[positionAffected] = {
@@ -49,6 +36,7 @@ const BetContainer = () => {
     }
     setBets(newState);
   };
+  console.log('BET RESULT =>', betResult);
   return (
     <div>
       <BetHeader betStatus={betStatus} betResult={betResult} />

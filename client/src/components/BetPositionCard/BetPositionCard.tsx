@@ -24,7 +24,8 @@ const BetPositionCard = ({
   setBetAmount,
 }:BetPositionCardProps) => {
   return (
-    <div className={cx(css.BetPositionCard, POSITION_CARD_STYLES[positionName], cardClass)}
+    <div data-testid={`cardBet_${positionName}`}
+        className={cx(css.BetPositionCard, POSITION_CARD_STYLES[positionName], cardClass)}
         onClick={() => setBetAmount(positionId)}
     >
         {!!betAmount && <div>{betAmount}</div>}

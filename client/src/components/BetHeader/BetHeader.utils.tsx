@@ -29,9 +29,9 @@ export const getHeaderMessage = (betStatus:string, betResult:BetResultType) => {
       return (<h1 className={css.BetHeaderFinishedPosition}>
                 {betResult.hasUserWon
                     ? <p className={css.BetHeaderFinishedPosition}>
-                        {getPositionBet(betResult.positions.playerPositionId as number)?.betPositionName} WON
+                        {getPositionBet(betResult.positions.playerPositionId as number)?.betPositionName} WON {" "}
                         <p className={css.BetHeaderFinishedPosition__winMessage}>
-                            YOU WIN
+                            YOU WIN {" "}
                             <span  className={css.BetHeaderFinishedPosition__moneyReturned}>
                                 {betResult.returnedAmount.toFixed(2)}
                             </span>

@@ -1,14 +1,32 @@
 // @types
-import { PositionBet } from "./types";
+import { Bet, PositionBet } from "./types";
 
-export const DEFAULT_BET_RESULT_STATE = {
+export const DEFAULT_BET_RESULT_STATE = [{
     hasUserWon: undefined,
     returnedAmount: 0,
     positions: {
         playerPositionId:null,
         computerPositionId:null
     }
-}
+}];
+export const BET_DEFAULT_STATE:Bet[] = [
+    {
+      betPositionId: 1,
+      betPositionName: 'ROCK',
+      betAmount: 0
+    },
+    {
+      betPositionId: 2,
+      betPositionName: 'PAPER',
+      betAmount: 0
+    },
+    {
+      betPositionId: 3,
+      betPositionName: 'SCISSORS',
+      betAmount: 0
+    },
+  ];
+export const MAX_BET_POSITIONS = 2;
 export const BET_STATUSES = Object.freeze({
     STARTING: "STARTING",
     IN_PROGRESS: "IN_PROGRESS",

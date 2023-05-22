@@ -1,7 +1,7 @@
 import { PAPER_ID, ROCK_ID, SCISSORS_ID } from "../../shared/constants";
 import { Bet, BetResultType } from "../../shared/types";
 
-const hasPlayerWon = (playerPositionId:number , computerPositionId:number) => {
+export const hasPlayerWon = (playerPositionId:number , computerPositionId:number):boolean => {
     if(playerPositionId === computerPositionId) {
         return false;
     }
@@ -17,33 +17,31 @@ const hasPlayerWon = (playerPositionId:number , computerPositionId:number) => {
     if(playerPositionId === PAPER_ID) {
         return computerPositionId === ROCK_ID;
     }
+
+    return false;
 }
 
-const calculateBetResult = (bets:number, totalBet:number) => bets === 2
+export const getRandomPositionId = (min:number, max:number):number => Math.floor(Math.random() * (max - min + 1) + min);
+
+export const calculateBetResult = (bets:number, totalBet:number):number => bets === 2
                                                         ? totalBet * 3
                                                         : totalBet * 14;
 
-export const getFinalPositionsResult = (bets:Bet[], computerPositionId:number) => {
-    const totalBet = bets.reduce((accumulatedBet, bet) => accumulatedBet+bet.betAmount, bets[0].betAmount);
-    let output:BetResultType = {
+export const getTotalBetAmount = (bets:Bet[]) => bets.reduce((accumulatedBet, bet) => accumulatedBet+bet.betAmount, 0);
+
+export const getFinalPositionsResult = (bets:Bet[], computerPositionId:number):BetResultType[] =>
+    bets.map(({ betPositionId }) => hasPlayerWon(betPositionId, computerPositionId) ? {
+        hasUserWon: true,
+        positions: {
+            computerPositionId,
+            playerPositionId: betPositionId, 
+        },
+        returnedAmount: calculateBetResult(bets.length, getTotalBetAmount(bets)),
+    } : {
         hasUserWon: false,
         returnedAmount: 0,
         positions: {
             computerPositionId,
-            playerPositionId: bets[0].betPositionId
-        }
-    };
-    bets.forEach(bet => {
-        if(hasPlayerWon(bet.betPositionId, computerPositionId)) {
-            return output = {
-                hasUserWon: true,
-                positions: {
-                    computerPositionId,
-                    playerPositionId: bet.betPositionId, 
-                },
-                returnedAmount: calculateBetResult(bets.length, totalBet),
-            }
+            playerPositionId: betPositionId
         }
     });
-    return output;
-}
