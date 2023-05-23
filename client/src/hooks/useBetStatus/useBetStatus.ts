@@ -28,7 +28,7 @@ const useBetStatus = (bets:Bet[]):[BetStatus, Dispatch<SetStateAction<BetStatus>
             setBetResult(DEFAULT_BET_RESULT_STATE);
         }
         return () => clearTimeout(timeout);
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [betStatus, betResult.length]);
 
   return [betStatus, setBetStatus, betResult];

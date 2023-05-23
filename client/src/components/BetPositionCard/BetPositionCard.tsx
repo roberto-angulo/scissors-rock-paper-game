@@ -6,9 +6,6 @@ import css from './BetPositionCard.module.scss';
 
 // @types
 import { BetPositionCardProps } from './BetPositionCard.types';
-import { BetPositionIdType } from '../../shared/types';
-
-const getPositionCardClass = (positionId:BetPositionIdType) => {}
 
 const POSITION_CARD_STYLES:{ [key:string]:string } = {
   ROCK: css.BetPositionCardRock,

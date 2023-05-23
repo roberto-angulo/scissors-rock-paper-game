@@ -9,14 +9,7 @@ import { BET_STATUSES } from '../../shared/constants';
 
 const DEFAULT_STATE:BetHeaderProps = {
     betStatus: BET_STATUSES.STARTING,
-    betResult: [{
-        hasUserWon: undefined,
-        returnedAmount: 0,
-        positions: {
-            computerPositionId: null,
-            playerPositionId: null
-        }
-    }],
+    betResult: [],
     errorMessage: ''
 };
 const setup = (props:BetHeaderProps) => render(<BetHeader {...props} />);

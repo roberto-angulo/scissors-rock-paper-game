@@ -42,9 +42,7 @@ export const getHeaderMessage = (betStatus:BetStatus, betResult:BetResultType) =
                         </p>
                     </div>
                     : <p className={css.BetHeaderFinishedPositionLose}>
-                        {/* <span className={css.BetHeaderFinishedPosition__loseMessage}> */}
-                            {getPositionBet(betResult.positions.playerPositionId as number)?.betPositionName}
-                        {/* </span> */}
+                        {getPositionBet(betResult.positions.playerPositionId as number)?.betPositionName}
                         {" "} LOST
                       </p>}
                 </h1>

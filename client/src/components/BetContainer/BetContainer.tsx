@@ -61,7 +61,7 @@ const BetContainer = () => {
         balance={balance}
         bet={betAmount}
         win={userHasWon
-          ? userReturnedAmount-betAmount
+          ? userReturnedAmount
           : 0}
       />
       <BetHeader betStatus={betStatus} betResult={betResult} errorMessage={errorBet} />
