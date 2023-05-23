@@ -50,3 +50,4 @@ export const POSITIONS_BET:PositionBet[] = [
     }
 ];
 export const MINIMUM_BET = 500;
+export const DEFAULT_BET_VALUE = 5000;

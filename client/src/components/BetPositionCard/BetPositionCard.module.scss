@@ -3,6 +3,9 @@
 .BetPositionCard {
     border-radius: 3.5px;
     cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     padding: .8rem;
     text-align: center;
     font: {
@@ -10,24 +13,36 @@
         weight: $betTextWeight;
     }
 
-    &_Scissors {
+    &Amount {
+        background: $light;
+        border-radius: 50%;
+        border: 6px solid $info;
+        color: $dark;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 3.15rem;
+        margin: 0 auto 0.55rem;
+        width: 3.15rem;
+    }
+
+    &Scissors {
         $border: $danger;
         background-color: $wine;
         border: 1px solid $border;
         color: $border;
     }
 
-    &_Paper {
+    &Paper {
         $border: $success;
         background-color:#1a381d;
         border: 1px solid $border;
         color: $border;
     }
 
-    &_Rock {
-        $border: $info;
+    &Rock {
         background-color: #211f4f;
-        border: 1px solid $border;
-        color: $border;
+        border: 1px solid $info;
+        color: $info;
     }
 }

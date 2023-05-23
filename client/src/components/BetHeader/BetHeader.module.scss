@@ -12,7 +12,7 @@
     &StartingPosition {
         color: $gold;
         font: {
-            size: .75rem;
+            size: .85rem;
             weight: 400;
         }
         text-align: center;
@@ -53,12 +53,6 @@
         &__moneyReturned {
             color: $light;
             font-size: 1.1rem;
-        }
-
-        &__loseMessage {
-            color: $gold;
-            font-size: 1.1rem;
-            margin-top: .3rem;
         }
     }
 }

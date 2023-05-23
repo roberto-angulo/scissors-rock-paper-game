@@ -8,17 +8,17 @@ interface BetBalancePropsType {
 
 const BetBalance = ({ balance, bet, win }:BetBalancePropsType) => {
   return (
-    <div className={css.BetBalanceWrapper}>
+    <div className={css.BetBalanceWrapper} data-testid="betBalance">
         <div className={css.BetBalance}>
-            <div>
+            <div data-testid="balanceValue">
                 <span>BALANCE: </span>
                 <span className={css.BetBalanceValue}>{balance}</span>
             </div>
-            <div>
+            <div data-testid="betValue">
                 <span>BET: </span>
                 <span className={css.BetBalanceValue}>{bet}</span>
             </div>
-            <div>
+            <div data-testid="winValue">
                 <span>WIN: </span>
                 <span className={css.BetBalanceValue}>{win}</span>
             </div>

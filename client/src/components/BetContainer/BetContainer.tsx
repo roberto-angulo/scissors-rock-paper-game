@@ -28,7 +28,6 @@ const BetContainer = () => {
   const [betStatus, setBetStatus, betResult] = useBetStatus(bets.filter(({ betAmount }) => betAmount));
   const [errorBet, setErrorBet] = useState<string>('');
   const userHasWon = betResult.some((bet) => bet.hasUserWon);
-  console.log('BETS: ', bets);
   const betAmount = getTotalBetAmount(bets);
   const userReturnedAmount = betResult.reduce((accumulated, bet) => accumulated+bet.returnedAmount, 0);
   const balance = useBalanceBet({
@@ -41,7 +40,7 @@ const BetContainer = () => {
 
   const setBetAmount = (id:BetPositionIdType) => {
     if((betAmount+MINIMUM_BET) > balance) {
-      setErrorBet('You must have a minimum of 500 to place a bet.');
+      setErrorBet(`You must have a minimum of ${MINIMUM_BET} to place a bet.`);
       return;
     }
     const userBetsPositions = bets.filter(bet => bet.betPositionId !== id && bet.betAmount);

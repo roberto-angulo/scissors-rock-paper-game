@@ -1,5 +1,6 @@
 // @constants
 import { BET_STATUSES, POSITIONS_BET } from "../../shared/constants";
+import { BetStatus } from "../../shared/types";
 
 // @types
 import { BetResultType } from "../../shared/types";
@@ -8,12 +9,13 @@ import { BetResultType } from "../../shared/types";
 import css from './BetHeader.module.scss';
 
 export const getPositionBet = (id:number) => POSITIONS_BET.find(bet => bet.betPositionId === id);
-export const getHeaderMessage = (betStatus:string, betResult:BetResultType) => {
-    if(betStatus === BET_STATUSES.STARTING) {
-        return <h1 data-testid="startingHeaderPositionsBet" className={css.BetHeaderStartingPosition}>
-                PICK YOUR POSITIONS
-            </h1>;
-    }
+export const getInitMessage = (betStatus:BetStatus) => betStatus === BET_STATUSES.STARTING
+    ? <h1 data-testid="startingHeaderPositionsBet" className={css.BetHeaderStartingPosition}>
+        PICK YOUR POSITIONS
+      </h1>
+    : <></>;
+export const getHeaderMessage = (betStatus:BetStatus, betResult:BetResultType) => {
+    
     if(betStatus === BET_STATUSES.IN_PROGRESS) {
         return (
             <h1 className={css.BetHeaderProgressPosition} data-testid="inProgressHeaderPositionsBet">
@@ -30,7 +32,7 @@ export const getHeaderMessage = (betStatus:string, betResult:BetResultType) => {
     if(betStatus === BET_STATUSES.FINISHED) {
       return (<h1 className={css.BetHeaderFinishedPosition} data-testid="finishedHeaderPositionsBet">
                 {betResult.hasUserWon
-                    ? <p className={css.BetHeaderFinishedPosition}>
+                    ? <div className={css.BetHeaderFinishedPosition}>
                         {getPositionBet(betResult.positions.playerPositionId as number)?.betPositionName} WON {" "}
                         <p className={css.BetHeaderFinishedPosition__winMessage}>
                             YOU WIN {" "}
@@ -38,11 +40,13 @@ export const getHeaderMessage = (betStatus:string, betResult:BetResultType) => {
                                 {betResult.returnedAmount.toFixed(2)}
                             </span>
                         </p>
-                    </p>
+                    </div>
                     : <p className={css.BetHeaderFinishedPositionLose}>
-                        <span className={css.BetHeaderFinishedPosition__loseMessage}>
-                            {getPositionBet(betResult.positions.playerPositionId as number)?.betPositionName}</span> LOST
-                        </p>}
+                        {/* <span className={css.BetHeaderFinishedPosition__loseMessage}> */}
+                            {getPositionBet(betResult.positions.playerPositionId as number)?.betPositionName}
+                        {/* </span> */}
+                        {" "} LOST
+                      </p>}
                 </h1>
       );
     }

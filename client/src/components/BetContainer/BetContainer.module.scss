@@ -1,6 +1,8 @@
 .BetContainer {
-    display: grid;
-    grid-template-rows: 18% 42% 35% 5%;
+    display: flex;
+    flex-direction: column;
+    height: 38vh;
+    justify-content: space-between;
 
     &Cards {
         display: flex;

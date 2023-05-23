@@ -11,9 +11,9 @@ import { BetPositionIdType } from '../../shared/types';
 const getPositionCardClass = (positionId:BetPositionIdType) => {}
 
 const POSITION_CARD_STYLES:{ [key:string]:string } = {
-  ROCK: css.BetPositionCard_Rock,
-  PAPER: css.BetPositionCard_Paper,
-  SCISSORS: css.BetPositionCard_Scissors
+  ROCK: css.BetPositionCardRock,
+  PAPER: css.BetPositionCardPaper,
+  SCISSORS: css.BetPositionCardScissors
 }
 
 const BetPositionCard = ({
@@ -28,8 +28,12 @@ const BetPositionCard = ({
         className={cx(css.BetPositionCard, POSITION_CARD_STYLES[positionName], cardClass)}
         onClick={() => setBetAmount(positionId)}
     >
-        {!!betAmount && <div>{betAmount}</div>}
-        <div>{positionName}</div>
+        <div>
+          {!!betAmount && <div className={css.BetPositionCardAmount}>
+              <span>{betAmount}</span>
+            </div>}
+          <div>{positionName}</div>
+        </div>
     </div>
   )
 }
