@@ -11,7 +11,7 @@ import { Bet, BetPositionIdType } from '../../shared/types';
 import css from './BetContainer.module.scss';
 
 // @constants
-import { BET_DEFAULT_STATE, BET_STATUSES, MAX_BET_POSITIONS } from '../../shared/constants';
+import { BET_DEFAULT_STATE, BET_STATUSES, MAX_BET_POSITIONS, MINIMUM_BET } from '../../shared/constants';
 
 // @hooks
 import useBetStatus from '../../hooks/useBetStatus/useBetStatus';
@@ -19,11 +19,31 @@ import useBetStatus from '../../hooks/useBetStatus/useBetStatus';
 // @components
 import BetHeader from '../BetHeader/BetHeader';
 import Button from '../Button/Button';
+import BetBalance from '../BetBalance/BetBalance';
+import { getTotalBetAmount } from '../../hooks/useBetStatus/useBetStatus.utils';
+import useBalanceBet from '../../hooks/useBalanceBet/useBalanceBet';
 
 const BetContainer = () => {
   const [bets, setBets] = useState<Bet[]>(BET_DEFAULT_STATE);
   const [betStatus, setBetStatus, betResult] = useBetStatus(bets.filter(({ betAmount }) => betAmount));
+  const [errorBet, setErrorBet] = useState<string>('');
+  const userHasWon = betResult.some((bet) => bet.hasUserWon);
+  console.log('BETS: ', bets);
+  const betAmount = getTotalBetAmount(bets);
+  const userReturnedAmount = betResult.reduce((accumulated, bet) => accumulated+bet.returnedAmount, 0);
+  const balance = useBalanceBet({
+    betAmount,
+    betStatus,
+    betResult: {
+      userHasWon,
+      userReturnedAmount
+  }});
+
   const setBetAmount = (id:BetPositionIdType) => {
+    if((betAmount+MINIMUM_BET) > balance) {
+      setErrorBet('You must have a minimum of 500 to place a bet.');
+      return;
+    }
     const userBetsPositions = bets.filter(bet => bet.betPositionId !== id && bet.betAmount);
     if(userBetsPositions.length === MAX_BET_POSITIONS) {
       return;
@@ -32,15 +52,21 @@ const BetContainer = () => {
     const positionAffected = bets.findIndex(bet => bet.betPositionId === id);
     newState[positionAffected] = {
       ...newState[positionAffected],
-      betAmount: newState[positionAffected].betAmount+500
+      betAmount: newState[positionAffected].betAmount+MINIMUM_BET
     }
     setBets(newState);
   };
-  console.log('BET RESULT =>', betResult);
   return (
-    <div>
-      <BetHeader betStatus={betStatus} betResult={betResult} />
-      <div className={css.BetContainer}>
+    <div className={css.BetContainer}>
+      <BetBalance
+        balance={balance}
+        bet={betAmount}
+        win={userHasWon
+          ? userReturnedAmount-betAmount
+          : 0}
+      />
+      <BetHeader betStatus={betStatus} betResult={betResult} errorMessage={errorBet} />
+      <div className={css.BetContainerCards}>
         {bets.map(bet => (
           <BetPositionCard
             cardClass={css.BetContainer_Card}
@@ -56,16 +82,19 @@ const BetContainer = () => {
         <Button
           classes={css.BetContainerButton}
           onClickHandler={() => {
-            if(betStatus === BET_STATUSES.STARTING) {
+            if(betStatus === BET_STATUSES.STARTING && !errorBet) {
               setBetStatus(BET_STATUSES.IN_PROGRESS);
-            } else if(betStatus === BET_STATUSES.FINISHED) {
+            } else if(errorBet) {
               setBets(BET_DEFAULT_STATE);
+              setErrorBet('');
+            } else if(betStatus === BET_STATUSES.FINISHED) {
               setBetStatus(BET_STATUSES.STARTING);
+              setBets(BET_DEFAULT_STATE);
             }
         }}
           disabled={betStatus === BET_STATUSES.IN_PROGRESS}
           >
-          {betStatus === BET_STATUSES.FINISHED ? "CLEAR" : "PLAY"}
+          {betStatus === BET_STATUSES.FINISHED || errorBet ? "CLEAR" : "PLAY"}
         </Button>
       </div>
     </div>

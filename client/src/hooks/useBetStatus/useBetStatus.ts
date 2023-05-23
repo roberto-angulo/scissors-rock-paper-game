@@ -1,5 +1,5 @@
 // @packages
-import { Dispatch, SetStateAction, useEffect, useState } from 'react'
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 // @constants
 import { BET_STATUSES, DEFAULT_BET_RESULT_STATE, ROCK_ID, SCISSORS_ID } from '../../shared/constants';

@@ -49,3 +49,4 @@ export const POSITIONS_BET:PositionBet[] = [
         betPositionName: 'SCISSORS'
     }
 ];
+export const MINIMUM_BET = 500;

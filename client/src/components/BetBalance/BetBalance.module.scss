@@ -1,0 +1,18 @@
+@import "../../shared/_theme.scss";
+
+.BetBalance {
+    display: flex;
+    color: $gold;
+    justify-content: space-evenly;
+    margin: 0 auto;
+    padding: .2rem;
+    width: 50%;
+
+    &Wrapper {
+        background-color: $dark;
+    }
+
+    &Value {
+        color: $light;
+    }
+}

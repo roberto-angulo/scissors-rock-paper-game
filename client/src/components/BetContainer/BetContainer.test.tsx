@@ -5,7 +5,6 @@ import userEvent from '@testing-library/user-event';
 // @components
 import BetContainer from './BetContainer';
 
-
 const setup = () => render(<BetContainer />);
 
 describe('Test <BetContainer />', () => {

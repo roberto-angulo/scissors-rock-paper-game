@@ -16,7 +16,8 @@ const DEFAULT_STATE:BetHeaderProps = {
             computerPositionId: null,
             playerPositionId: null
         }
-    }]
+    }],
+    errorMessage: ''
 };
 const setup = (props:BetHeaderProps) => render(<BetHeader {...props} />);
 
@@ -36,7 +37,8 @@ describe('Test <BetHeader />', () => {
                     computerPositionId: 1,
                     playerPositionId: 2
                 }
-            }]
+            }],
+            errorMessage: ''
         });
         expect(screen.getByTestId('bet-header')).toHaveTextContent('ROCK VS PAPER');
     });
@@ -51,7 +53,8 @@ describe('Test <BetHeader />', () => {
                     computerPositionId: 1,
                     playerPositionId: 2
                 }
-            }]
+            }],
+            errorMessage: ''
         });
         expect(screen.getByTestId('bet-header')).toHaveTextContent('PAPER WON YOU WIN 5000.00');
     });
@@ -66,8 +69,14 @@ describe('Test <BetHeader />', () => {
                     computerPositionId: 2,
                     playerPositionId: 1
                 }
-            }]
+            }],
+            errorMessage: ''
         });
         expect(screen.getByTestId('bet-header')).toHaveTextContent('ROCK LOST');
     });
+
+    test('Check that error message is displayed accordingly', () => {
+        setup({ ...DEFAULT_STATE, errorMessage: 'Some error message' });
+        expect(screen.getByTestId('bet-header')).toHaveTextContent('Some error message');
+    })
 });

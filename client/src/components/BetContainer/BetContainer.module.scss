@@ -1,8 +1,12 @@
-
 .BetContainer {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
+    display: grid;
+    grid-template-rows: 18% 42% 35% 5%;
+
+    &Cards {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+    }
 
     &ButtonWrapper {
         text-align: center;
